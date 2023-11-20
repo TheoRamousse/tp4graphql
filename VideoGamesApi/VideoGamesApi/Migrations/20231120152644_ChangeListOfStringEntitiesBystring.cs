@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace VideoGamesApi.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class ChangeListOfStringEntitiesBystring : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,9 @@ namespace VideoGamesApi.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    PublicationDate = table.Column<DateTime>(type: "TEXT", nullable: false)
+                    Genres = table.Column<string>(type: "TEXT", nullable: false),
+                    PublicationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Platforms = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,7 +54,7 @@ namespace VideoGamesApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EditorGame",
+                name: "EditorEntityGameEntity",
                 columns: table => new
                 {
                     EditorsId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -60,15 +62,15 @@ namespace VideoGamesApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EditorGame", x => new { x.EditorsId, x.GamesId });
+                    table.PrimaryKey("PK_EditorEntityGameEntity", x => new { x.EditorsId, x.GamesId });
                     table.ForeignKey(
-                        name: "FK_EditorGame_Editor_EditorsId",
+                        name: "FK_EditorEntityGameEntity_Editor_EditorsId",
                         column: x => x.EditorsId,
                         principalTable: "Editor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EditorGame_Game_GamesId",
+                        name: "FK_EditorEntityGameEntity_Game_GamesId",
                         column: x => x.GamesId,
                         principalTable: "Game",
                         principalColumn: "Id",
@@ -76,32 +78,7 @@ namespace VideoGamesApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "StringEntity",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    String = table.Column<string>(type: "TEXT", nullable: false),
-                    GameId = table.Column<int>(type: "INTEGER", nullable: true),
-                    GameId1 = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StringEntity", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StringEntity_Game_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Game",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_StringEntity_Game_GameId1",
-                        column: x => x.GameId1,
-                        principalTable: "Game",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GameStudio",
+                name: "GameEntityStudioEntity",
                 columns: table => new
                 {
                     GamesId = table.Column<int>(type: "INTEGER", nullable: false),
@@ -109,15 +86,15 @@ namespace VideoGamesApi.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GameStudio", x => new { x.GamesId, x.StudiosId });
+                    table.PrimaryKey("PK_GameEntityStudioEntity", x => new { x.GamesId, x.StudiosId });
                     table.ForeignKey(
-                        name: "FK_GameStudio_Game_GamesId",
+                        name: "FK_GameEntityStudioEntity_Game_GamesId",
                         column: x => x.GamesId,
                         principalTable: "Game",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GameStudio_Studio_StudiosId",
+                        name: "FK_GameEntityStudioEntity_Studio_StudiosId",
                         column: x => x.StudiosId,
                         principalTable: "Studio",
                         principalColumn: "Id",
@@ -125,46 +102,33 @@ namespace VideoGamesApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_EditorGame_GamesId",
-                table: "EditorGame",
+                name: "IX_EditorEntityGameEntity_GamesId",
+                table: "EditorEntityGameEntity",
                 column: "GamesId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GameStudio_StudiosId",
-                table: "GameStudio",
+                name: "IX_GameEntityStudioEntity_StudiosId",
+                table: "GameEntityStudioEntity",
                 column: "StudiosId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StringEntity_GameId",
-                table: "StringEntity",
-                column: "GameId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StringEntity_GameId1",
-                table: "StringEntity",
-                column: "GameId1");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EditorGame");
+                name: "EditorEntityGameEntity");
 
             migrationBuilder.DropTable(
-                name: "GameStudio");
-
-            migrationBuilder.DropTable(
-                name: "StringEntity");
+                name: "GameEntityStudioEntity");
 
             migrationBuilder.DropTable(
                 name: "Editor");
 
             migrationBuilder.DropTable(
-                name: "Studio");
+                name: "Game");
 
             migrationBuilder.DropTable(
-                name: "Game");
+                name: "Studio");
         }
     }
 }

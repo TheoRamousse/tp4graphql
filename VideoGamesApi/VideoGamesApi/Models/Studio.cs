@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using VideoGamesApi.Entities;
 
 namespace VideoGamesApi.Models
 {
@@ -11,5 +12,6 @@ namespace VideoGamesApi.Models
         public string Name { get; set; }
         [UseSorting]
         public ICollection<Game> Games { get; set; }
+
     }
 }

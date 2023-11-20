@@ -13,19 +13,19 @@ namespace VideoGamesApi.Data
         [UseFiltering]
         [UseSorting]
         public IQueryable<Game> GetGames([Service] ApplicationDbContext context) =>
-            context.Game;
+            context.Game.Select(el => EntityModelMapper.ToModel(el));
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
         public IQueryable<Editor> GetEditors([Service] ApplicationDbContext context) =>
-            context.Editor;
+            context.Editor.Select(el => EntityModelMapper.ToModel(el));
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
         public IQueryable<Studio> GetStudios([Service] ApplicationDbContext context) =>
-            context.Studio;
+            context.Studio.Select(el => EntityModelMapper.ToModel(el));
 
         [GraphQLMetadata("game")]
         public Game? GetGame(int id, [Service] IGameRepository repos)

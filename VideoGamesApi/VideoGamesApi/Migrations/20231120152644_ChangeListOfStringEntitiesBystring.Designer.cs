@@ -11,8 +11,8 @@ using VideoGamesApi.Data;
 namespace VideoGamesApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231120105025_Initial")]
-    partial class Initial
+    [Migration("20231120152644_ChangeListOfStringEntitiesBystring")]
+    partial class ChangeListOfStringEntitiesBystring
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,7 +20,7 @@ namespace VideoGamesApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.14");
 
-            modelBuilder.Entity("EditorGame", b =>
+            modelBuilder.Entity("EditorEntityGameEntity", b =>
                 {
                     b.Property<int>("EditorsId")
                         .HasColumnType("INTEGER");
@@ -32,10 +32,10 @@ namespace VideoGamesApi.Migrations
 
                     b.HasIndex("GamesId");
 
-                    b.ToTable("EditorGame");
+                    b.ToTable("EditorEntityGameEntity");
                 });
 
-            modelBuilder.Entity("GameStudio", b =>
+            modelBuilder.Entity("GameEntityStudioEntity", b =>
                 {
                     b.Property<int>("GamesId")
                         .HasColumnType("INTEGER");
@@ -47,10 +47,10 @@ namespace VideoGamesApi.Migrations
 
                     b.HasIndex("StudiosId");
 
-                    b.ToTable("GameStudio");
+                    b.ToTable("GameEntityStudioEntity");
                 });
 
-            modelBuilder.Entity("VideoGamesApi.Models.Editor", b =>
+            modelBuilder.Entity("VideoGamesApi.Entities.EditorEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,13 +65,21 @@ namespace VideoGamesApi.Migrations
                     b.ToTable("Editor");
                 });
 
-            modelBuilder.Entity("VideoGamesApi.Models.Game", b =>
+            modelBuilder.Entity("VideoGamesApi.Entities.GameEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Genres")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Platforms")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -83,32 +91,7 @@ namespace VideoGamesApi.Migrations
                     b.ToTable("Game");
                 });
 
-            modelBuilder.Entity("VideoGamesApi.Models.StringEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("GameId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("GameId1")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("String")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GameId");
-
-                    b.HasIndex("GameId1");
-
-                    b.ToTable("StringEntity");
-                });
-
-            modelBuilder.Entity("VideoGamesApi.Models.Studio", b =>
+            modelBuilder.Entity("VideoGamesApi.Entities.StudioEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -123,52 +106,34 @@ namespace VideoGamesApi.Migrations
                     b.ToTable("Studio");
                 });
 
-            modelBuilder.Entity("EditorGame", b =>
+            modelBuilder.Entity("EditorEntityGameEntity", b =>
                 {
-                    b.HasOne("VideoGamesApi.Models.Editor", null)
+                    b.HasOne("VideoGamesApi.Entities.EditorEntity", null)
                         .WithMany()
                         .HasForeignKey("EditorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VideoGamesApi.Models.Game", null)
+                    b.HasOne("VideoGamesApi.Entities.GameEntity", null)
                         .WithMany()
                         .HasForeignKey("GamesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GameStudio", b =>
+            modelBuilder.Entity("GameEntityStudioEntity", b =>
                 {
-                    b.HasOne("VideoGamesApi.Models.Game", null)
+                    b.HasOne("VideoGamesApi.Entities.GameEntity", null)
                         .WithMany()
                         .HasForeignKey("GamesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("VideoGamesApi.Models.Studio", null)
+                    b.HasOne("VideoGamesApi.Entities.StudioEntity", null)
                         .WithMany()
                         .HasForeignKey("StudiosId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("VideoGamesApi.Models.StringEntity", b =>
-                {
-                    b.HasOne("VideoGamesApi.Models.Game", null)
-                        .WithMany("Genres")
-                        .HasForeignKey("GameId");
-
-                    b.HasOne("VideoGamesApi.Models.Game", null)
-                        .WithMany("Platforms")
-                        .HasForeignKey("GameId1");
-                });
-
-            modelBuilder.Entity("VideoGamesApi.Models.Game", b =>
-                {
-                    b.Navigation("Genres");
-
-                    b.Navigation("Platforms");
                 });
 #pragma warning restore 612, 618
         }

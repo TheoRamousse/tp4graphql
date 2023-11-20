@@ -14,7 +14,11 @@ namespace VideoGamesApi.Repositories
 
         public Editor? GetById(int id)
         {
-            return _appDbContext.Editor.Where(el => el.Id == id).FirstOrDefault();
+            var res = _appDbContext.Editor.Where(el => el.Id == id).FirstOrDefault();
+
+            if(res == null)
+                return null;
+            return EntityModelMapper.ToModel(res);
         }
     }
 }

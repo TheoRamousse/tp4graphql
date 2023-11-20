@@ -14,14 +14,19 @@ namespace VideoGamesApi.Repositories
 
         public async Task<Game> AddGame(Game game)
         {
-            var resAsEntity = await _appDbContext.AddAsync(game);
+            var resAsEntity = await _appDbContext.AddAsync(EntityModelMapper.ToEntity(game));
             _appDbContext.SaveChanges();
-            return resAsEntity.Entity;
+            return EntityModelMapper.ToModel(resAsEntity.Entity);
         }
 
         public Game? GetById(int id)
         {
-            return _appDbContext.Game.Where(el => el.Id == id).FirstOrDefault();
+            var result = _appDbContext.Game.Where(el => el.Id == id).FirstOrDefault();
+
+            if(result == null)
+                return null;
+
+            return EntityModelMapper.ToModel(result);
         }
 
         public int GetMaxId()
