@@ -50,5 +50,24 @@ namespace VideoGamesApi.Mutations
 
             return res;
         }
+
+
+        public async Task<Editor> AddEditor(EditorInput Editor, [Service] IGameRepository reposGame, [Service] IEditorRepository repos)
+        {
+            Editor res = null;
+            try
+            {
+                res = await repos.AddEditor(new Editor
+                {
+
+                });
+            }
+            catch (Exception ex)
+            {
+                return res;
+            }
+
+            return res;
+        }
     }
 }

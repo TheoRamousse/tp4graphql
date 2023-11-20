@@ -1,8 +1,10 @@
 using HotChocolate.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using VideoGamesApi.Data;
 using VideoGamesApi.Mutations;
 using VideoGamesApi.Repositories;
+using Path = System.IO.Path;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -25,20 +27,14 @@ builder.Services.AddGraphQLServer().AddQueryType<Query>().AddProjections().AddFi
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     var folder = Environment.SpecialFolder.LocalApplicationData;
-    var path = Environment.GetFolderPath(folder);
+    var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
     var dbpath = System.IO.Path.Join(path, "game.db");
 
     options.UseSqlite($"Data Source={dbpath}");
 });
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
 
 app.UseHttpsRedirection();
 
