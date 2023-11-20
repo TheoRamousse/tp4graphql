@@ -7,5 +7,7 @@ namespace VideoGamesApi.Repositories
         Game? GetById(int id);
 
         Task<Game> AddGame(Game game);
+
+        int GetMaxId();
     }
 }
