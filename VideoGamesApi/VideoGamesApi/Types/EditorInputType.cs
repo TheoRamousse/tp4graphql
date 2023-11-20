@@ -3,7 +3,7 @@ using VideoGamesApi.Models;
 
 namespace VideoGamesApi.Types
 {
-    internal class EditorInputType: InputObjectGraphType<Editor>
+    internal class EditorInputType: InputObjectGraphType<EditorInput>
     {
     }
 }

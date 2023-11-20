@@ -3,7 +3,7 @@ using VideoGamesApi.Models;
 
 namespace VideoGamesApi.Types
 {
-    internal class StudioInputType: InputObjectGraphType<Studio>
+    internal class StudioInputType: InputObjectGraphType<StudioInput>
     {
     }
 }

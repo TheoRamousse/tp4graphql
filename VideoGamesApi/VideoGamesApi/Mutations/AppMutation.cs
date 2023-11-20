@@ -20,7 +20,7 @@ namespace VideoGamesApi.Mutations
                     Name = game.Name,
                     PublicationDate = game.PublicationDate,
                     Editors = game.EditorsId.Select(el => reposEditors.GetById(el)).ToList(),
-                    Studios = game.EditorsId.Select(el => reposStudios.GetById(el)).ToList(),
+                    Studios = game.StudiosId.Select(el => reposStudios.GetById(el)).ToList(),
                     Id = repos.GetMaxId() + 1,
                     Genres = game.Genres,
                     Platforms = game.Platforms,
