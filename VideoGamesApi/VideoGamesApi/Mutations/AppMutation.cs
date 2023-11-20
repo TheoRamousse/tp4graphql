@@ -17,7 +17,7 @@ namespace VideoGamesApi.Mutations
             {
                 res = await repos.AddGame(new Game
                 {
-                    Name = "toto",
+                    Name = game.Name,
                     PublicationDate = game.PublicationDate,
                     Editors = game.EditorsId.Select(el => reposEditors.GetById(el)).ToList(),
                     Studios = game.EditorsId.Select(el => reposStudios.GetById(el)).ToList(),

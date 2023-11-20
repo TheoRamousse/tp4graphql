@@ -52,16 +52,21 @@ namespace VideoGamesApi.Models
 
         public static Game ToModel(GameEntity game)
         {
-            return new Game
+            var res = new Game
             {
                 Id = game.Id,
                 Name = game.Name,
                 Genres = game.Genres.Split(",").ToList(),
                 Platforms = game.Platforms.Split(",").ToList(),
-                Studios = game.Studios.Select(el => EntityModelMapper.ToModel(el)).ToList(),
                 PublicationDate = game.PublicationDate,
-                Editors = game.Editors.Select(el => EntityModelMapper.ToModel(el)).ToList()
             };
+
+            if (game.Studios != null)
+                res.Studios = game.Studios.Select(el => EntityModelMapper.ToModel(el)).ToList();
+            if (game.Editors != null)
+                res.Editors = game.Editors.Select(el => EntityModelMapper.ToModel(el)).ToList();
+
+            return res;
         }
 
 
