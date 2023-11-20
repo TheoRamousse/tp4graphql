@@ -32,5 +32,23 @@ namespace VideoGamesApi.Mutations
 
             return res;
         }
+
+
+        public async Task<Studio> AddStudio(StudioInput studio, [Service] IGameRepository reposGame, [Service] IStudioRepository repos)
+        {
+            Studio res = null;
+            try
+            {
+                res = await repos.AddStudio(new Studio { 
+
+                });
+            }
+            catch (Exception ex)
+            {
+                return res;
+            }
+
+            return res;
+        }
     }
 }

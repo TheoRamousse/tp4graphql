@@ -20,5 +20,12 @@ namespace VideoGamesApi.Repositories
                 return null;
             return EntityModelMapper.ToModel(res);
         }
+
+        public async Task<Studio> AddStudio(Studio editor)
+        {
+            var resAsEntity = await _appDbContext.AddAsync(EntityModelMapper.ToEntity(editor));
+            _appDbContext.SaveChanges();
+            return EntityModelMapper.ToModel(resAsEntity.Entity);
+        }
     }
 }
