@@ -7,5 +7,9 @@ namespace VideoGamesApi.Repositories
         Editor? GetById(int id);
 
         Task<Editor> AddEditor(Editor editor);
+
+        int GetMaxId();
+
+        void Delete(int id);
     }
 }

@@ -11,7 +11,7 @@ namespace VideoGamesApi.Models
         [Required(ErrorMessage = "Please specify a name for the editor")]
         public string Name { get; set; }
         [UseSorting]
-        public ICollection<Game> Games { get; set; }
+        public ICollection<Game> Games { get; set; } = new List<Game>();
 
     }
 }

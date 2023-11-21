@@ -10,7 +10,6 @@ namespace VideoGamesApi.Models
             {
                 Id = editor.Id,
                 Name = editor.Name,
-                Games = editor.Games.Select(x => EntityModelMapper.ToEntity(x)).ToList(),
             };
         }
 
@@ -23,9 +22,9 @@ namespace VideoGamesApi.Models
                 Name = game.Name,
                 Genres = string.Join(",", game.Genres),
                 Platforms = string.Join(",", game.Platforms),
-                Studios = game.Studios.Select(el => EntityModelMapper.ToEntity(el)).ToList(),
-                PublicationDate = game.PublicationDate,
-                Editors = game.Editors.Select(el => EntityModelMapper.ToEntity(el)).ToList()
+                PublicationDate = DateTime.Parse(game.PublicationDate),
+                Studios = new List<StudioGameRelation>(),
+                Editors = new List<EditorGameRelation>(),
             };
         }
 
@@ -35,7 +34,6 @@ namespace VideoGamesApi.Models
             {
                 Id = studio.Id,
                 Name = studio.Name,
-                Games = studio.Games.Select(x => EntityModelMapper.ToEntity(x)).ToList()
             };
         }
 
@@ -45,7 +43,7 @@ namespace VideoGamesApi.Models
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Games = entity.Games.Select(el => EntityModelMapper.ToModel(el)).ToList()
+                Games = entity.Games != null ? entity.Games.Select(el => EntityModelMapper.ToModel(el.Game)).ToList() : new List<Game>()
             };
         }
 
@@ -58,13 +56,8 @@ namespace VideoGamesApi.Models
                 Name = game.Name,
                 Genres = game.Genres.Split(",").ToList(),
                 Platforms = game.Platforms.Split(",").ToList(),
-                PublicationDate = game.PublicationDate,
+                PublicationDate = game.PublicationDate.ToString("yyyy-MM-dd"),
             };
-
-            if (game.Studios != null)
-                res.Studios = game.Studios.Select(el => EntityModelMapper.ToModel(el)).ToList();
-            if (game.Editors != null)
-                res.Editors = game.Editors.Select(el => EntityModelMapper.ToModel(el)).ToList();
 
             return res;
         }
@@ -76,7 +69,7 @@ namespace VideoGamesApi.Models
             {
                 Id = entity.Id,
                 Name = entity.Name,
-                Games = entity.Games.Select(el => EntityModelMapper.ToModel(el)).ToList(),
+                Games = entity.Games != null ? entity.Games.Select(el => EntityModelMapper.ToModel(el.Game)).ToList() : new List<Game>(),
             };
         }
     }

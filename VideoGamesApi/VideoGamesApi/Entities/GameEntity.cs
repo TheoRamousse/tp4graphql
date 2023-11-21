@@ -18,11 +18,11 @@ namespace VideoGamesApi.Entities
 
         [Required(ErrorMessage = "Please specify editors for the game")]
         [UseSorting]
-        public ICollection<EditorEntity> Editors { get; set; }
+        public ICollection<EditorGameRelation> Editors { get; set; } = new List<EditorGameRelation>();
 
         [Required(ErrorMessage = "Please specify studios for the game")]
         [UseSorting]
-        public ICollection<StudioEntity> Studios { get; set; }
+        public ICollection<StudioGameRelation> Studios { get; set; } = new List<StudioGameRelation>();
 
         [Required(ErrorMessage = "Please specify platforms for the game")]
         public string Platforms { get; set; }

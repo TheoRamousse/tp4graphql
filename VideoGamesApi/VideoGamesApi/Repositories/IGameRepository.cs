@@ -9,5 +9,6 @@ namespace VideoGamesApi.Repositories
         Task<Game> AddGame(Game game);
 
         int GetMaxId();
+        void Delete(int id);
     }
 }

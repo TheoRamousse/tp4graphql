@@ -3,6 +3,8 @@ using HotChocolate;
 using HotChocolate.Data;
 using GraphQL;
 using VideoGamesApi.Repositories;
+using VideoGamesApi.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace VideoGamesApi.Data
 {
@@ -12,20 +14,20 @@ namespace VideoGamesApi.Data
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Game> GetGames([Service] ApplicationDbContext context) =>
-            context.Game.Select(el => EntityModelMapper.ToModel(el));
+        public IQueryable<GameEntity> GetGames([Service] ApplicationDbContext context) =>
+            context.Game.Include(e => e.Editors).ThenInclude(e => e.Editor).Include(e => e.Studios).ThenInclude(e=>e.Studio).AsQueryable();
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Editor> GetEditors([Service] ApplicationDbContext context) =>
-            context.Editor.Select(el => EntityModelMapper.ToModel(el));
+        public IQueryable<EditorEntity> GetEditors([Service] ApplicationDbContext context) =>
+            context.Editor.Include(e => e.Games).ThenInclude(e => e.Game).AsQueryable();
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<Studio> GetStudios([Service] ApplicationDbContext context) =>
-            context.Studio.Select(el => EntityModelMapper.ToModel(el));
+        public IQueryable<StudioEntity> GetStudios([Service] ApplicationDbContext context) =>
+            context.Studio.Include(e => e.Games).ThenInclude(e => e.Game).AsQueryable();
 
         [GraphQLMetadata("game")]
         public Game? GetGame(int id, [Service] IGameRepository repos)

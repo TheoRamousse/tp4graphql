@@ -8,6 +8,6 @@ namespace VideoGamesApi.Entities
         public int Id { get; set; }
 
         public string Name { get; set; }
-        public ICollection<GameEntity> Games { get; set; }
+        public ICollection<EditorGameRelation> Games { get; set; } = new List<EditorGameRelation>();
     }
 }

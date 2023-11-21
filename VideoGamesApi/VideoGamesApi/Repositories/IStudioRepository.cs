@@ -7,5 +7,9 @@ namespace VideoGamesApi.Repositories
         Studio? GetById(int id);
 
         Task<Studio> AddStudio(Studio studio);
+
+        int GetMaxId();
+
+        void Delete(int id);
     }
 }
