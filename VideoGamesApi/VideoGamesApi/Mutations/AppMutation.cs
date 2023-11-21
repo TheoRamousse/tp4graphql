@@ -35,6 +35,18 @@ namespace VideoGamesApi.Mutations
             return null;
         }
 
+        public async Task<Studio?> RemoveStudio(int id, [Service] IStudioRepository repos)
+        {
+            repos.Delete(id);
+            return null;
+        }
+
+        public async Task<Studio?> RemoveEditor(int id, [Service] IEditorRepository repos)
+        {
+            repos.Delete(id);
+            return null;
+        }
+
 
         public async Task<Studio?> AddStudio(StudioInput studio, [Service] IGameRepository reposGame, [Service] IStudioRepository repos)
         {
