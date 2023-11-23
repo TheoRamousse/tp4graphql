@@ -14,20 +14,20 @@ namespace VideoGamesApi.Data
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<GameEntity> GetGames([Service] ApplicationDbContext context) =>
-            context.Game.Include(e => e.Editors).ThenInclude(e => e.Editor).Include(e => e.Studios).ThenInclude(e=>e.Studio).AsQueryable();
+        public IQueryable<Game> GetGames([Service] ApplicationDbContext context) =>
+            context.Game.Include(e => e.Editors).ThenInclude(e => e.Editor).Include(e => e.Studios).ThenInclude(e=>e.Studio).AsEnumerable().Select(el => EntityModelMapper.ToModel(el)).AsQueryable();
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<EditorEntity> GetEditors([Service] ApplicationDbContext context) =>
-            context.Editor.Include(e => e.Games).ThenInclude(e => e.Game).AsQueryable();
+        public IQueryable<Editor> GetEditors([Service] ApplicationDbContext context) =>
+            context.Editor.Include(e => e.Games).ThenInclude(e => e.Game).AsEnumerable().Select(el => EntityModelMapper.ToModel(el)).AsQueryable();
 
         [UseProjection]
         [UseFiltering]
         [UseSorting]
-        public IQueryable<StudioEntity> GetStudios([Service] ApplicationDbContext context) =>
-            context.Studio.Include(e => e.Games).ThenInclude(e => e.Game).AsQueryable();
+        public IQueryable<Studio> GetStudios([Service] ApplicationDbContext context) =>
+            context.Studio.Include(e => e.Games).ThenInclude(e => e.Game).AsEnumerable().Select(el => EntityModelMapper.ToModel(el)).AsQueryable();
 
         [GraphQLMetadata("game")]
         public Game? GetGame(int id, [Service] IGameRepository repos)
